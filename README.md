@@ -85,8 +85,6 @@ Please document your key design considerations and assumptions made when the tes
 
 ### Swagger
 
-This template uses
-
 This template uses [FastAPI](https://github.com/tiangolo/fastapi) which automatically generates docs through [Swagger UI](https://github.com/swagger-api/swagger-ui) and [ReDoc](https://github.com/Redocly/redoc) to autodocument the API and create an [OpenAPI](https://github.com/OAI/OpenAPI-Specification) spec. The Swagger UI is available at `http://localhost:8000/docs`.
 
 ## Implementation considerations
