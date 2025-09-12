@@ -1,0 +1,14 @@
+from uuid import UUID
+from pydantic import BaseModel
+
+from payment_gateway_api.enums.payment_status import PaymentStatus
+
+
+class PostPaymentResponse(BaseModel):
+    id: UUID
+    status: PaymentStatus
+    cardNumberLastFour: int
+    expiryMonth: int
+    expiryYear: int
+    currency: str
+    amount: int
