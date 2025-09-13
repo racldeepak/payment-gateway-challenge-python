@@ -1,6 +1,7 @@
 import logging
 from uuid import UUID, uuid4
 
+from payment_gateway_api.enums.payment_status import PaymentStatus
 from payment_gateway_api.exception.event_processiing_exception import EventProcessingException
 from payment_gateway_api.model.post_payment_request import PostPaymentRequest
 from payment_gateway_api.model.post_payment_response import PostPaymentResponse
@@ -21,5 +22,17 @@ class PaymentGatewayService:
             raise EventProcessingException(f"Invalid ID")
         return payment
 
-    def process_payment(self, payment_request: PostPaymentRequest) -> UUID:
-        return uuid4()
+    def process_payment(self, payment_request: PostPaymentRequest) -> PostPaymentResponse:
+        # TODO: Integrate with bank gateway
+        payment_id = uuid4()
+        payment_response = PostPaymentResponse(
+            id=payment_id,
+            status=PaymentStatus.AUTHORIZED,
+            cardNumberLastFour=int(payment_request.cardNumber[-4:]),
+            expiryMonth=payment_request.expiryMonth,
+            expiryYear=payment_request.expiryYear,
+            currency=payment_request.currency,
+            amount=payment_request.amount
+        )
+        self.payments_repository.add(payment_response)
+        return payment_response
