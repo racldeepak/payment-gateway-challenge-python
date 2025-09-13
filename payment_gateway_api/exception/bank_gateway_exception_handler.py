@@ -10,5 +10,5 @@ def bank_gateway_exception_handler(request: Request, exc: BankGatewayException):
     logging.error(f"Exception happened: {str(exc)}")
     return JSONResponse(
         status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-        content=ErrorResponse(message="Payment processing error").dict(),
+        content=ErrorResponse(message="Error processing payment").dict(),
     )
