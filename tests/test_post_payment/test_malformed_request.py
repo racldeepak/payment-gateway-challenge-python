@@ -18,7 +18,7 @@ def get_sample_valid_payment_request() -> Dict[str, Union[str, int]]:
     }
 
 
-def test_request_with_invalid_card_number_returns_422() -> None:
+def test_request_with_invalid_card_number_returns_400() -> None:
     client = TestClient(app)
     payment_request = get_sample_valid_payment_request()
 
@@ -34,10 +34,11 @@ def test_request_with_invalid_card_number_returns_422() -> None:
     for card_number in invalid_card_numbers:
         payment_request["cardNumber"] = card_number
         response = client.post("/payment", json=payment_request)
-        assert response.status_code == 422
+        assert response.status_code == 400
+        assert response.json()["message"] == "Rejected: Invalid payment request"
 
 
-def test_request_with_invalid_expiry_month_returns_422() -> None:
+def test_request_with_invalid_expiry_month_returns_400() -> None:
     client = TestClient(app)
     payment_request = get_sample_valid_payment_request()
 
@@ -46,10 +47,11 @@ def test_request_with_invalid_expiry_month_returns_422() -> None:
     for expiry_month in invalid_expiry_months:
         payment_request["expiryMonth"] = expiry_month
         response = client.post("/payment", json=payment_request)
-        assert response.status_code == 422
+        assert response.status_code == 400
+        assert response.json()["message"] == "Rejected: Invalid payment request"
 
 
-def test_request_with_invalid_expiry_year_returns_422() -> None:
+def test_request_with_invalid_expiry_year_returns_400() -> None:
     client = TestClient(app)
     payment_request = get_sample_valid_payment_request()
 
@@ -58,10 +60,11 @@ def test_request_with_invalid_expiry_year_returns_422() -> None:
     for expiry_year in invalid_expiry_years:
         payment_request["expiryYear"] = expiry_year
         response = client.post("/payment", json=payment_request)
-        assert response.status_code == 422
+        assert response.status_code == 400
+        assert response.json()["message"] == "Rejected: Invalid payment request"
 
 
-def test_request_with_invalid_currency_returns_422() -> None:
+def test_request_with_invalid_currency_returns_400() -> None:
     client = TestClient(app)
     payment_request = get_sample_valid_payment_request()
 
@@ -70,10 +73,11 @@ def test_request_with_invalid_currency_returns_422() -> None:
     for currency in invalid_currencies:
         payment_request["currency"] = currency
         response = client.post("/payment", json=payment_request)
-        assert response.status_code == 422
+        assert response.status_code == 400
+        assert response.json()["message"] == "Rejected: Invalid payment request"
 
 
-def test_request_with_invalid_amount_returns_422() -> None:
+def test_request_with_invalid_amount_returns_400() -> None:
     client = TestClient(app)
     payment_request = get_sample_valid_payment_request()
 
@@ -82,10 +86,11 @@ def test_request_with_invalid_amount_returns_422() -> None:
     for amount in invalid_amounts:
         payment_request["amount"] = amount
         response = client.post("/payment", json=payment_request)
-        assert response.status_code == 422
+        assert response.status_code == 400
+        assert response.json()["message"] == "Rejected: Invalid payment request"
 
 
-def test_request_with_invalid_cvv_returns_422() -> None:
+def test_request_with_invalid_cvv_returns_400() -> None:
     client = TestClient(app)
     payment_request = get_sample_valid_payment_request()
 
@@ -94,10 +99,11 @@ def test_request_with_invalid_cvv_returns_422() -> None:
     for cvv in invalid_cvvs:
         payment_request["cvv"] = cvv
         response = client.post("/payment", json=payment_request)
-        assert response.status_code == 422
+        assert response.status_code == 400
+        assert response.json()["message"] == "Rejected: Invalid payment request"
 
 
-def test_request_with_expiry_date_in_past_returns_422() -> None:
+def test_request_with_expiry_date_in_past_returns_400() -> None:
     client = TestClient(app)
     payment_request = get_sample_valid_payment_request()
     
@@ -111,4 +117,5 @@ def test_request_with_expiry_date_in_past_returns_422() -> None:
         payment_request["expiryMonth"] = expiry_month
         payment_request["expiryYear"] = expiry_year
         response = client.post("/payment", json=payment_request)
-        assert response.status_code == 422
+        assert response.status_code == 400
+        assert response.json()["message"] == "Rejected: Invalid payment request"

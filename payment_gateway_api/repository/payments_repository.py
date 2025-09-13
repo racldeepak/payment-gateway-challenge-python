@@ -1,14 +1,14 @@
 from typing import Dict, Union
 from uuid import UUID
 
-from payment_gateway_api.model.post_payment_response import PostPaymentResponse
+from payment_gateway_api.model.payment_details import PaymentDetails
 
 
 class PaymentsRepository:
-    payments: Dict[UUID, PostPaymentResponse] = {}
+    payments: Dict[UUID, PaymentDetails] = {}
 
-    def add(self, payment: PostPaymentResponse) -> None:
+    def add(self, payment: PaymentDetails) -> None:
         self.payments[payment.id] = payment
 
-    def get(self, id: UUID) -> Union[PostPaymentResponse, None]:
+    def get(self, id: UUID) -> Union[PaymentDetails, None]:
         return self.payments.get(id)

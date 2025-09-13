@@ -57,5 +57,5 @@ class PostPaymentRequest(BaseModel):
         return values
 
     @property
-    def expiry_date(self) -> str:
+    def expiryDate(self) -> str:
         return f"{self.expiryMonth:02}/{self.expiryYear}"
