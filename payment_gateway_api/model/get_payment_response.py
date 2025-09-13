@@ -1,6 +1,7 @@
 from uuid import UUID
 from pydantic import BaseModel
 
+from payment_gateway_api.enums.currency import Currency
 from payment_gateway_api.enums.payment_status import PaymentStatus
 
 
@@ -10,5 +11,5 @@ class GetPaymentResponse(BaseModel):
     cardNumberLastFour: int
     expiryMonth: int
     expiryYear: int
-    currency: str
+    currency: Currency
     amount: int

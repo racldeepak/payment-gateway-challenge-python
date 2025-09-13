@@ -52,3 +52,26 @@ def test_request_with_invalid_card_is_rejected():
     assert response_json["expiryYear"] == 2025
     assert response_json["currency"] == "GBP"
     assert response_json["amount"] == 10
+
+
+def test_payment_requests_are_perisited():
+    client = TestClient(app)
+    post_response = client.post(
+        "/payment", 
+        json={
+            "cardNumber": "1111111111111111",
+            "expiryMonth": 12,
+            "expiryYear": 2025,
+            "currency": "USD",
+            "amount": 10,
+            "cvv": 123
+        }
+    )
+
+    assert post_response.status_code == 200
+    post_response_json = post_response.json()
+    payment_id = post_response_json["id"]
+
+    get_response = client.get(f"/payment/{payment_id}")
+    assert get_response.status_code == 200
+    assert get_response.json() == post_response_json

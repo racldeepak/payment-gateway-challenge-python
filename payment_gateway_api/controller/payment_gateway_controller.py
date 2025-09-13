@@ -4,6 +4,7 @@ from uuid import UUID
 from fastapi import APIRouter
 
 from payment_gateway_api.exception.invalid_payment_exception import InvalidPaymentException
+from payment_gateway_api.model.get_payment_response import GetPaymentResponse
 from payment_gateway_api.model.post_payment_request import PostPaymentRequest
 from payment_gateway_api.model.post_payment_response import PostPaymentResponse
 from payment_gateway_api.repository.payments_repository import PaymentsRepository
@@ -23,7 +24,6 @@ async def process_payment(payment: Dict) -> PostPaymentResponse:
     return paymentGatewayService.process_payment(payment)
 
 
-# TODO: Change response model to GetPaymentResponse
-@router.get("/payment/{id}", response_model=PostPaymentResponse)
-async def get_post_payment_event_by_id(id: UUID) -> PostPaymentResponse:
+@router.get("/payment/{id}", response_model=GetPaymentResponse)
+async def get_post_payment_event_by_id(id: UUID) -> GetPaymentResponse:
     return paymentGatewayService.get_payment_by_id(id)

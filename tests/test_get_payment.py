@@ -4,13 +4,13 @@ from fastapi.testclient import TestClient
 
 from payment_gateway_api.app import app
 from payment_gateway_api.enums.payment_status import PaymentStatus
-from payment_gateway_api.model.post_payment_response import PostPaymentResponse
+from payment_gateway_api.model.payment_details import PaymentDetails
 from payment_gateway_api.repository.payments_repository import PaymentsRepository
 
 
 def test_when_payment_with_id_exist_then_correct_payment_is_returned():
     paymentsRepository = PaymentsRepository()
-    payment = PostPaymentResponse(
+    payment = PaymentDetails(
         id=uuid4(),
         status=PaymentStatus.AUTHORIZED,
         cardNumberLastFour=4321,
